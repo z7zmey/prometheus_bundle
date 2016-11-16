@@ -1,0 +1,20 @@
+{
+  "name": "zmey/prometheus_bundle",
+  "description": "",
+  "minimum-stability": "stable",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Vadim Slizov",
+      "email": "z7zmey@gmail.com"
+    }
+  ],
+  "require": {
+    "php": "^7.0",
+    "symfony/framework-bundle": "^2.8|^3.0",
+    "symfony/console": "^2.8|^3.0"
+  },
+  "autoload": {
+    "psr-4": { "PrometheusBundle\\": "src/" }
+  }
+}

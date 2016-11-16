@@ -1,0 +1,35 @@
+services:
+    prometheus.sample_factory:
+        class: Prometheus\Sample\PrometheusSampleFactory
+
+    prometheus.storage:
+        class: Prometheus\Metric\Storage\PrometheusMetricStorageAPCU
+        arguments:
+            - '@prometheus.sample_factory'
+
+    prometheus.render:
+        class: Prometheus\Metric\Render\PrometheusMetricRender
+        arguments:
+            - '@prometheus.storage'
+
+    prometheus.descriptor_factory:
+        class: Prometheus\Metric\Descriptor\Factory\PrometheusMetricDescriptorFactory
+
+    prometheus.metric_factory:
+        class: Prometheus\Metric\Factory\PrometheusMetricFactory
+        arguments:
+            - '@prometheus.storage'
+            - '@prometheus.render'
+
+    prometheus.descriptor_repository:
+        class: Prometheus\Metric\Descriptor\Repository\PrometheusMetricDescriptorRepository
+        arguments:
+            - '@prometheus.descriptor_factory'
+            - '%prometheus.metrics%'
+
+    prometheus.metric_repository:
+        class: Prometheus\Metric\Repository\PrometheusMetricRepository
+        arguments:
+            - '%prometheus.metrics%'
+            - '@prometheus.metric_factory'
+            - '@prometheus.descriptor_repository'
